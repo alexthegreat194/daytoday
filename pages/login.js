@@ -23,11 +23,11 @@ export default function Login() {
             console.log(err);
         });
         
-        // toast.promise(loginPost, {
-        //     loading: 'Logging in...',
-        //     success: 'Logged in!',
-        //     error: 'Error logging in',
-        // });
+        toast.promise(loginPost, {
+            loading: 'Logging in...',
+            success: (res) => `Logged in: ${res.data.token}`,
+            error: 'Error logging in',
+        });
     }
 
     return (
