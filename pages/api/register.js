@@ -1,6 +1,7 @@
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import jwt from 'jsonwebtoken';
 import prisma from '../../utils/prisma';
+import bcrypt from 'bcrypt';
 
 const register = async (req, res) => {
     const { username, email, password } = req.body;
@@ -19,22 +20,26 @@ const register = async (req, res) => {
         });
     }
 
+    const passwordHash = await bcrypt.hash(password, 10);
     const user = await prisma.user.create({
         data: {
             username,
             email,
-            password,
+            password: passwordHash,
         }
     })
     .then(user => {
-        const token = jwt.sign({ username }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ 
+            username,
+            id: user.id, 
+        }, process.env.JWT_SECRET, { expiresIn: '10h' });
         res.json({ 
             success: true,
             token,
         });
     })
     .catch(err => {
-        // console.table(err);
+        console.log(err);
         if (err.code == 'P2002') {
             res.status(400).json({
                 success: false,

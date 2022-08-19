@@ -24,9 +24,9 @@ export default function Login() {
         });
         
         toast.promise(loginPost, {
-            loading: 'Logging in...',
-            success: (res) => `Logged in: ${res.data.token}`,
-            error: 'Error logging in',
+            loading: 'logging in...',
+            success: (res) => `logged in!: ${res.data.token}`,
+            error: (err) => `${err.response.data.message}`,
         });
     }
 
