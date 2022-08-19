@@ -14,7 +14,8 @@ export default function Register() {
 
         const registerPost = axios.post('http://localhost:3000/api/register', {
             username,
-            password
+            password,
+            email
         });
 
         registerPost.then(res => {
