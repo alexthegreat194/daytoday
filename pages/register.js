@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import cookieCutter from "cookie-cutter";
+import { TokenContext } from "./_app";
 
 export default function Register() {
 
+    const [token, setToken] = useContext(TokenContext);
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -12,7 +15,7 @@ export default function Register() {
         e.preventDefault();
         console.log(username, password);
 
-        const registerPost = axios.post('http://localhost:3000/api/register', {
+        const registerPost = axios.post('/api/register', {
             username,
             password,
             email
@@ -20,6 +23,8 @@ export default function Register() {
 
         registerPost.then(res => {
             console.log(res);
+            cookieCutter.set('token', res.data.token);
+            setToken(res.data.token);
         })
         .catch(err => {
             console.log(err);
