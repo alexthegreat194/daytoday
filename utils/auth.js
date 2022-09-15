@@ -25,13 +25,10 @@ export const requireUser = async (context) => {
         props:{},
     };
 
-
     // console.log('found token:', token);
     if (!token) {
         return redirectReturn;
     }
-
-    
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET)

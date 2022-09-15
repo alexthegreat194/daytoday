@@ -44,7 +44,7 @@ export default function Login() {
             <form onSubmit={handleSubmit} className='flex flex-col gap-6'>
                 <h1 className='text-4xl font-bold self-center'>Login</h1>
 
-                <div className="flex flex-col">
+                <div className="flex flex-col gap-5">
                     <div className="flex flex-col">
                         <label className="text-lg font-light">Username/Email</label>
                         <input className="bg-gray-100 text-xl px-3 py-2 w-[500px] shadow-inner rounded-md" type="text" onChange={(e) => setUsername(e.target.value)} />
@@ -58,7 +58,7 @@ export default function Login() {
                 <div className="flex content-center gap-5">
                     <input className="text-white text-lg py-1 px-6 bg-red-500 rounded-lg hover:cursor-pointer" type="submit" value={"Login"}/>
                     <Link className="text-red-500 text-lg " href="/register">
-                        <a className="text-red-500 text-lg ">Already have an account?</a>
+                        <a className="text-red-500 text-lg align-middle text-center ">Don't have an account?</a>
                     </Link>
                 </div>
                 

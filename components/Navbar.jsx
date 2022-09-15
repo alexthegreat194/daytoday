@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import cookieCutter from "cookie-cutter";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
@@ -11,6 +12,7 @@ const Navbar = () => {
     const [token, setToken] = useContext(TokenContext);
     const [user, setUser] = useState(null);
     const [isLoggedIn, setIsLoggedIn] = useState(Boolean(token));
+    const router = useRouter();
     
     useEffect(() => {
         console.log("token has changed:", token);
@@ -33,6 +35,7 @@ const Navbar = () => {
         setToken(null);
         setIsLoggedIn(false);
         setUser(null);
+        router.push('/');
         toast('logged out');
     }
 
@@ -64,11 +67,10 @@ const Navbar = () => {
                 <h1 className="font-bold text-2xl">
                     <span className="text-red-500">Day</span>
                     <span className="">To</span>
-                    <span className="text-blue-500">Day</span>
+                    <span className="text-blue-400">Day</span>
                 </h1>
                 <Link href="/" className="font-bold">Home</Link>
-                <Link href="/secondary" className="font-bold">Secondary</Link>
-                <Link href="/locked" className="font-bold">Locked</Link>
+                <Link href="/dashboard" className="font-bold">Dashboard</Link>
             </div>
             <div className="flex gap-4 items-center px-2">
                 {rightNav()}
