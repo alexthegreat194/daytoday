@@ -59,12 +59,12 @@ const Navbar = () => {
     };
 
     return (
-        <div className="flex justify-between p-3 px-4 bg-gray-200">
+        <div className="flex justify-between p-3 px-4 bg-gray-50">
             <div className="flex gap-4 items-center px-2">
                 <h1 className="font-bold text-2xl">
-                    <span className="text-red-700">Day</span>
+                    <span className="text-red-500">Day</span>
                     <span className="">To</span>
-                    <span className="text-blue-700">Day</span>
+                    <span className="text-blue-500">Day</span>
                 </h1>
                 <Link href="/" className="font-bold">Home</Link>
                 <Link href="/secondary" className="font-bold">Secondary</Link>

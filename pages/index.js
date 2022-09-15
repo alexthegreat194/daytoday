@@ -11,7 +11,7 @@ export default function Home() {
       </Head>
 
       <main>
-        <h1>Hello World</h1>
+        <h1 className="text-5xl text-blue-300">Andrew's Realm</h1>
       </main>
     </div>
   )
