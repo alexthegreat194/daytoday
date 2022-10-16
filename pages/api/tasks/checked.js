@@ -9,8 +9,9 @@ export default async (req, res) => {
 
     const { taskId, userId, completed } = req.body;
 
-    if (!taskId || !userId || !completed) {
-        return res.status(401).json({
+    if (!taskId || !userId || completed === undefined) {
+        console.log(req.body)
+        return res.status(400).json({
             message: 'Missing body parameters'
         })
     }

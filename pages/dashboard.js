@@ -59,16 +59,20 @@ const Dashboard = (props) => {
     const [taskTitle, setTaskTitle] = useState('');
     const handleNewTask = (e) => {
         e.preventDefault();
-        console.log('new task', taskTitle);
         if (!taskTitle) {
             return;
         }
+        console.log('new task', taskTitle);
         axios.post('/api/tasks', {
             title: taskTitle,
             userId: props.user.id,
-        });
-        setTaskTitle('');
-        getTasks();
+        })
+            .then((res) => {
+                setTaskTitle('');
+                getTasks();
+            })
+            .catch(err => console.log(err.response.data));
+        
     };
 
     return (
