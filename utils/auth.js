@@ -40,6 +40,7 @@ export const requireUser = async (context) => {
                 id: true,
                 username: true,
                 email: true,
+                lastLogin: true
             },
         });
 
@@ -47,8 +48,10 @@ export const requireUser = async (context) => {
             return redirectReturn;
         }
 
+        foundUser.lastLogin = foundUser.lastLogin.toJSON();
+
         return {
-            props:{
+            props: {
                 user: foundUser,
             },
         };

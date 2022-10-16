@@ -25,7 +25,7 @@ const login = async (req, res) => {
   });
 
   if (!foundUser) {
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       message: 'incorrect username or password',
     });

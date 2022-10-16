@@ -60,7 +60,7 @@ export default function Register() {
                 
                 <div className="flex content-center gap-5">
                     <input className="text-white text-lg py-1 px-6 bg-red-500 rounded-lg hover:cursor-pointer" type="submit" value={"Register"}/>
-                    <Link className="text-red-500 text-lg " href="/register">
+                    <Link className="text-red-500 text-lg " href="/login">
                         <a className="text-red-500 text-lg align-middle text-center ">Already have an account?</a>
                     </Link>
                 </div>

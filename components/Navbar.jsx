@@ -15,7 +15,7 @@ const Navbar = () => {
     const router = useRouter();
     
     useEffect(() => {
-        console.log("token has changed:", token);
+        // console.log("token has changed:", token);
 
         //get user info
         axios.get('/api/user')
