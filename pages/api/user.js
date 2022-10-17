@@ -36,6 +36,7 @@ const user = async (req, res) => {
                 id: true,
                 username: true,
                 email: true,
+                lastLogin: true
             },
         })
         .catch(err => {

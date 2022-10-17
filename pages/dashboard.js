@@ -2,6 +2,7 @@
 import { requireUser } from "../utils/auth";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { ableToCheckIn } from "../utils/checks";
 
 const Dashboard = (props) => {
     
@@ -163,6 +164,19 @@ export default Dashboard
 export async function getServerSideProps(context) {
     const props = await requireUser(context);
 
+    const user = props.props.user;
+    const valid = ableToCheckIn(user.lastLogin);
+    // console.log(valid);
+
+    if (valid) {
+        return {
+            redirect: {
+                destination: '/checkin',
+                permanent: false,
+            },
+        }
+    }
+    
     return props;
 }
 
