@@ -103,59 +103,56 @@ const Dashboard = (props) => {
 
     return (
         <>
-        <div>
-            <h1>Dashboard</h1>
-            <h1>{props.user.username}</h1>
-            <h1>{props.user.email}</h1>
-        </div>
 
-        <div>
-            <h1>Tasks</h1>
-            <div>
-                {tasks.map((task) => {
-                    return (
-                        <Task
-                            task={task}
-                            key={task.id} 
-                            onDelete={() => deleteTask(task.id)}
-                            onCheckBoxClick={() => checkTask(task.id, !task.completed)}
-                        />
-                    )
-                })}
-            </div>
-            <br />
-            <div>
-                <h3>Task title</h3>
-                <form onSubmit={(e) => handleNewTask(e, false)}>
-                    <label>Title</label>
-                    <input type="text" value={taskTitle} onChange={e => setTaskTitle(e.target.value)} required/>
-                    <button type="submit">New Task +</button>
-                </form>
-            </div>
-        </div>
+        <div className="flex justify-center">
+            <h1 className="text-3xl font-bold">Welcome Back {props.user.username}</h1>
+        </div>        
 
-        <div>
-            <h1>SubTasks</h1>
-            <div>
-                {subTasks.map((task) => {
-                    return (
-                        <Task
-                            task={task}
-                            key={task.id} 
-                            onDelete={() => deleteTask(task.id)}
-                            onCheckBoxClick={() => checkTask(task.id, !task.completed)}
-                        />
-                    )
-                })}
+
+        <div className="w-1/2">
+            <div className="m-5">
+                <h1 className="text-2xl font-bold">Tasks</h1>
+                <div>
+                    {tasks.map((task) => {
+                        return (
+                            <Task
+                                task={task}
+                                key={task.id} 
+                                onDelete={() => deleteTask(task.id)}
+                                onCheckBoxClick={() => checkTask(task.id, !task.completed)}
+                            />
+                        )
+                    })}
+                </div>
+    
+                <div>
+                    <form onSubmit={(e) => handleNewTask(e, false)}  className="flex flex-col ">
+                        <input className="w-full p-4 border" type="text" placeholder="New Task" value={taskTitle} onChange={e => setTaskTitle(e.target.value)} required/>
+                        <button className="bg-blue-300 text-white rounded-b-xl p-2" type="submit">+ Task </button>
+                    </form>
+                </div>
             </div>
-            <br />
-            <div>
-                <h3>Subtask</h3>
-                <form onSubmit={(e) => handleNewTask(e, true)}>
-                    <label>Title</label>
-                    <input type="text" value={subtaskTitle} onChange={e => setSubtaskTitle(e.target.value)} required/>
-                    <button type="submit">New Subtask +</button>
-                </form>
+    
+            <div className="m-5">
+                <h1 className="text-2xl font-bold">SubTasks</h1>
+                <div>
+                    {subTasks.map((task) => {
+                        return (
+                            <Task
+                                task={task}
+                                key={task.id} 
+                                onDelete={() => deleteTask(task.id)}
+                                onCheckBoxClick={() => checkTask(task.id, !task.completed)}
+                            />
+                        )
+                    })}
+                </div>
+                <div>
+                    <form onSubmit={(e) => handleNewTask(e, true)} className="flex flex-col">
+                        <input className="w-full p-4 border" type="text" placeholder="New Subtask" value={subtaskTitle} onChange={e => setSubtaskTitle(e.target.value)} required/>
+                        <button className="bg-red-300 text-white rounded-b-xl p-2" type="submit">New Subtask +</button>
+                    </form>
+                </div>
             </div>
         </div>
         </>

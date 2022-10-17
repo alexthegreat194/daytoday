@@ -20,7 +20,7 @@ const CheckinSubtasks = ({ tasksState, increasePhase }) => {
 
     return (
         <div className="text-xl h-[80vh] flex flex-col items-center justify-center gap-5">
-            <h1 className="text-3xl font-bold">Subtasks</h1>
+            <h1 className="text-3xl font-bold">What do you want to do later?</h1>
 
             <div className="w-3/5 flex flex-col gap-5">
                 <div className="flex flex-col shadow">

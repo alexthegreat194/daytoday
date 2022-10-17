@@ -82,15 +82,15 @@ export async function getServerSideProps(context) {
     const valid = ableToCheckIn(user.lastLogin);
     // console.log(valid);
 
-    // if (!valid) {
-    //     return {
-    //         redirect: {
-    //             permanent: false,
-    //             destination: "/dashboard",
-    //         },
-    //         props:{},
-    //     };
-    // }
+    if (!valid) {
+        return {
+            redirect: {
+                permanent: false,
+                destination: "/dashboard",
+            },
+            props:{},
+        };
+    }
 
     return props;
 }
