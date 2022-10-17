@@ -21,7 +21,7 @@ const Priority = ({ priority }) => {
     }
 
     return (
-        <h3 className={color + " font-thin px-5 py-1 rounded-xl w-32 text-center"}>{text}</h3>
+        <h3 className={color + " font-light px-5 py-1 rounded-xl w-32 text-center shadow"}>{text}</h3>
     )
 }
 
