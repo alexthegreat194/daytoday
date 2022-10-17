@@ -7,7 +7,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { redirect } from "next/dist/server/api-utils";
 
-export default function (props) {
+const Checkin = (props) => {
     const [tasks, setTasks] = useState([])
     const [subTasks, setSubTasks] = useState([])
     const [phase, setPhase] = useState(0);
@@ -72,6 +72,7 @@ export default function (props) {
     }
 }
 
+export default Checkin;
 
 export async function getServerSideProps(context) {
     const props = await requireUser(context);

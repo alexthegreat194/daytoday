@@ -58,7 +58,7 @@ export default function Login() {
                 <div className="flex content-center gap-5">
                     <input className="text-white text-lg py-1 px-6 bg-red-500 rounded-lg hover:cursor-pointer" type="submit" value={"Login"}/>
                     <Link className="text-red-500 text-lg " href="/register">
-                        <a className="text-red-500 text-lg align-middle text-center ">Don't have an account?</a>
+                        <a className="text-red-500 text-lg align-middle text-center ">Don&apos;t have an account?</a>
                     </Link>
                 </div>
                 
