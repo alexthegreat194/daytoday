@@ -2,12 +2,19 @@
 import prisma from "../../utils/prisma";
 
 const post = async (req, res) => {
-    const { title, userId } = req.body;
+    const { title, userId, isSubtask } = req.body;
+
+    if (!title || !userId || isSubtask === undefined) {
+        return res.status(400).json({
+            message: "Missing body parameters"
+        });
+    }
 
     const task = await prisma.task.create({
         data: {
             title,
             userId,
+            isSubtask,
         },
     });
 

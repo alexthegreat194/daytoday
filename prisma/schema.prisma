@@ -28,6 +28,8 @@ model Task {
   priority Int @default(0)
   completed Boolean @default(false)
 
+  isSubtask Boolean @default(false)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

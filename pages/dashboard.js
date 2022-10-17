@@ -6,12 +6,22 @@ import axios from "axios";
 const Dashboard = (props) => {
     
     const [tasks, setTasks] = useState([])
+    const [subTasks, setSubTasks] = useState([])
 
     const sortTasks = (givenTasks) => {
-        let checkedTasks = givenTasks.filter(task => task.completed);
-        let uncheckedTasks = givenTasks.filter(task => !task.completed);
+        let checkedTasks = givenTasks.filter(task => task.completed && !task.isSubtask);
+        let uncheckedTasks = givenTasks.filter(task => !task.completed && !task.isSubtask);
 
-        return [...uncheckedTasks, ...checkedTasks];
+        let subTasks = givenTasks.filter(task => task.isSubtask);
+        let checkedSubTasks = subTasks.filter(task => task.completed);
+        let uncheckedSubTasks = subTasks.filter(task => !task.completed);
+
+        let sortedTasks = [...uncheckedTasks, ...checkedTasks];
+        let sortedSubTasks = [...uncheckedSubTasks, ...checkedSubTasks];
+
+        console.log({sortedTasks, sortedSubTasks});
+
+        return { sortedTasks, sortedSubTasks };
     }
 
     const getTasks = () => {
@@ -22,7 +32,9 @@ const Dashboard = (props) => {
         })
         .then(res => {
             console.log(res.data);
-            setTasks(sortTasks(res.data));
+            let { sortedTasks, sortedSubTasks } = sortTasks(res.data);
+            setTasks(sortedTasks);
+            setSubTasks(sortedSubTasks);
         })
         .catch(err => console.log(err));    
     }
@@ -57,18 +69,28 @@ const Dashboard = (props) => {
     }, []);
 
     const [taskTitle, setTaskTitle] = useState('');
-    const handleNewTask = (e) => {
+    const [subtaskTitle, setSubtaskTitle] = useState('');
+    
+    const handleNewTask = (e, isSubtask) => {
         e.preventDefault();
-        if (!taskTitle) {
+
+        let title = isSubtask ? subtaskTitle : taskTitle;
+
+        if (!title) {
             return;
         }
-        console.log('new task', taskTitle);
+        console.log('new task', title);
         axios.post('/api/tasks', {
-            title: taskTitle,
+            title: title,
             userId: props.user.id,
+            isSubtask: isSubtask
         })
             .then((res) => {
-                setTaskTitle('');
+                if (isSubtask) {
+                    setSubtaskTitle('');
+                } else {
+                    setTaskTitle('');
+                }
                 getTasks();
             })
             .catch(err => console.log(err.response.data));
@@ -99,11 +121,36 @@ const Dashboard = (props) => {
             </div>
             <br />
             <div>
-                <h3>Task</h3>
-                <form onSubmit={handleNewTask}>
+                <h3>Task title</h3>
+                <form onSubmit={(e) => handleNewTask(e, false)}>
                     <label>Title</label>
                     <input type="text" value={taskTitle} onChange={e => setTaskTitle(e.target.value)} required/>
                     <button type="submit">New Task +</button>
+                </form>
+            </div>
+        </div>
+
+        <div>
+            <h1>SubTasks</h1>
+            <div>
+                {subTasks.map((task) => {
+                    return (
+                        <div key={task.id} className="flex gap-5">
+                            <input type="checkbox" value={task.completed} onClick={() => checkTask(task.id, !task.completed)}/>
+                            <h1>{task.title}</h1>
+                            <h1>{task.priority}</h1>
+                            <button onClick={() => deleteTask(task.id)}>Delete</button>
+                        </div>
+                    )
+                })}
+            </div>
+            <br />
+            <div>
+                <h3>Subtask</h3>
+                <form onSubmit={(e) => handleNewTask(e, true)}>
+                    <label>Title</label>
+                    <input type="text" value={subtaskTitle} onChange={e => setSubtaskTitle(e.target.value)} required/>
+                    <button type="submit">New Subtask +</button>
                 </form>
             </div>
         </div>
