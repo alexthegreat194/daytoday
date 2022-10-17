@@ -3,6 +3,7 @@ import { requireUser } from "../utils/auth";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { ableToCheckIn } from "../utils/checks";
+import Task from "../components/Task";
 
 const Dashboard = (props) => {
     
@@ -20,7 +21,7 @@ const Dashboard = (props) => {
         let sortedTasks = [...uncheckedTasks, ...checkedTasks];
         let sortedSubTasks = [...uncheckedSubTasks, ...checkedSubTasks];
 
-        console.log({sortedTasks, sortedSubTasks});
+        // console.log({sortedTasks, sortedSubTasks});
 
         return { sortedTasks, sortedSubTasks };
     }
@@ -32,7 +33,7 @@ const Dashboard = (props) => {
             },
         })
         .then(res => {
-            console.log(res.data);
+            // console.log(res.data);
             let { sortedTasks, sortedSubTasks } = sortTasks(res.data);
             setTasks(sortedTasks);
             setSubTasks(sortedSubTasks);
@@ -54,12 +55,14 @@ const Dashboard = (props) => {
     };
 
     const checkTask = (id, checked) => {
+        console.log('check task', id, checked);
         axios.post('/api/tasks/checked', {
             taskId: id,
             userId: props.user.id,
             completed: checked
         })
             .then((res) => {
+                console.log(res.data);
                 getTasks();
             })
             .catch(err => console.log(err.response.data));
@@ -111,12 +114,12 @@ const Dashboard = (props) => {
             <div>
                 {tasks.map((task) => {
                     return (
-                        <div key={task.id} className="flex gap-5">
-                            <input type="checkbox" value={task.completed} onClick={() => checkTask(task.id, !task.completed)}/>
-                            <h1>{task.title}</h1>
-                            <h1>{task.priority}</h1>
-                            <button onClick={() => deleteTask(task.id)}>Delete</button>
-                        </div>
+                        <Task
+                            task={task}
+                            key={task.id} 
+                            onDelete={() => deleteTask(task.id)}
+                            onCheckBoxClick={() => checkTask(task.id, !task.completed)}
+                        />
                     )
                 })}
             </div>
@@ -136,12 +139,12 @@ const Dashboard = (props) => {
             <div>
                 {subTasks.map((task) => {
                     return (
-                        <div key={task.id} className="flex gap-5">
-                            <input type="checkbox" value={task.completed} onClick={() => checkTask(task.id, !task.completed)}/>
-                            <h1>{task.title}</h1>
-                            <h1>{task.priority}</h1>
-                            <button onClick={() => deleteTask(task.id)}>Delete</button>
-                        </div>
+                        <Task
+                            task={task}
+                            key={task.id} 
+                            onDelete={() => deleteTask(task.id)}
+                            onCheckBoxClick={() => checkTask(task.id, !task.completed)}
+                        />
                     )
                 })}
             </div>
@@ -168,14 +171,14 @@ export async function getServerSideProps(context) {
     const valid = ableToCheckIn(user.lastLogin);
     // console.log(valid);
 
-    if (valid) {
-        return {
-            redirect: {
-                destination: '/checkin',
-                permanent: false,
-            },
-        }
-    }
+    // if (valid) {
+    //     return {
+    //         redirect: {
+    //             destination: '/checkin',
+    //             permanent: false,
+    //         },
+    //     }
+    // }
     
     return props;
 }
