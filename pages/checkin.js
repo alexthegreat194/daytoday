@@ -13,6 +13,19 @@ export default function (props) {
     const [phase, setPhase] = useState(0);
     const router = useRouter();
 
+    const saveTasks = () => {
+        axios.post('/api/checkin', {
+            userId: props.user.id,
+            tasks: tasks,
+            subTasks: subTasks
+        })
+            .then((res) => {
+                console.log(res.data);
+                router.push('/dashboard');
+            })
+            .catch(err => console.log(err.response.data));
+    }
+
     if (phase === 0) {
         return (
             <CheckinTasks 
@@ -24,21 +37,10 @@ export default function (props) {
         return (
             <CheckinSubtasks 
                 tasksState={{subTasks, setSubTasks}} 
-                increasePhase={() => setPhase(2)} 
+                increasePhase={() => saveTasks()} 
             />
         );
     } else {
-
-        axios.post('/api/checkin', {
-            userId: props.user.id,
-            tasks: tasks,
-            subTasks: subTasks
-        })
-            .then((res) => {
-                console.log(res.data);
-                router.push('/dashboard');
-            })
-            .catch(err => console.log(err.response.data));
 
         return (
             <div>
@@ -75,18 +77,20 @@ export async function getServerSideProps(context) {
     const props = await requireUser(context);
 
     const user = props.props.user;
+    if (!user) { return props }
+
     const valid = ableToCheckIn(user.lastLogin);
     // console.log(valid);
 
-    if (!valid) {
-        return {
-            redirect: {
-                permanent: false,
-                destination: "/dashboard",
-            },
-            props:{},
-        };
-    }
+    // if (!valid) {
+    //     return {
+    //         redirect: {
+    //             permanent: false,
+    //             destination: "/dashboard",
+    //         },
+    //         props:{},
+    //     };
+    // }
 
     return props;
 }
