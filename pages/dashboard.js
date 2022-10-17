@@ -165,6 +165,10 @@ export async function getServerSideProps(context) {
     const props = await requireUser(context);
 
     const user = props.props.user;
+    if (!user) {
+        return props;
+    }
+
     const valid = ableToCheckIn(user.lastLogin);
     // console.log(valid);
 
