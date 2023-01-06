@@ -15,7 +15,7 @@ export const ableToCheckIn = (lastLogin) => {
     let difHours = difMins/60
     // console.log(difSeconds, difMins, difHours)
 
-    // valid after 2 mins
-    return difMins > 2
+    // valid after 12 hours
+    return difHours > 12;
 }
 

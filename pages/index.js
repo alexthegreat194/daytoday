@@ -1,6 +1,7 @@
 
 import Head from "next/head"
 import Link from "next/link"
+import Dropdown from "../components/Dropdown"
 
 
 export default function Home() {
@@ -19,6 +20,8 @@ export default function Home() {
           <Link href={"/dashboard"} className="w-min">
             <a className="text-2xl p-3 px-4 shadow hover:shadow-xl font-bold text-white bg-gray-800 rounded-xl hover:bg-blue-400 transition-colors">Get Started</a>
           </Link>
+
+          <Dropdown />
         </div>
       </main>
     </div>

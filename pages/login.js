@@ -26,7 +26,7 @@ export default function Login() {
             console.log(res);
             cookieCutter.set('token', res.data.token);
             setToken(res.data.token);
-            router.push('/');
+            router.push('/dashboard');
         })
         .catch(err => {
             console.log(err);

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { ableToCheckIn } from "../utils/checks";
 import Task from "../components/Task";
+import Dropdown from "../components/Dropdown";
 
 const Dashboard = (props) => {
     
