@@ -2,7 +2,7 @@ import { useState } from "react";
 import Priority from "./Priority";
 import Dropdown from "./Dropdown";
 
-const Task = ({task, onCheckBoxClick, onDelete}) => {
+const Task = ({task, onCheckBoxClick, onDelete, onStatusChange}) => {
 
     const [isChecked, setIsChecked] = useState(task.completed); 
 
@@ -14,7 +14,7 @@ const Task = ({task, onCheckBoxClick, onDelete}) => {
             </div>
 
             <div className="flex gap-5 items-center">
-                <Dropdown startingStatus={task.priority} />
+                <Dropdown onDropdownChange={(status) => onStatusChange(task.id, status)} startingStatus={task.priority} />
                 <button onClick={onDelete}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" 
                         className="w-8 h-8 text-red-500">

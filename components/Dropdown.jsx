@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
+import { toast } from "react-hot-toast";
 
-const Dropdown = ({startingStatus}) => {
+const Dropdown = ({startingStatus, onDropdownChange}) => {
 
     const options = [
         {value: 0, color: "bg-green-300", text: "low"},
@@ -14,26 +15,26 @@ const Dropdown = ({startingStatus}) => {
     const [color, setColor] = useState("bg-gray-300")
     const [text, setText] = useState("Idk")
 
-    useEffect(() => {
-
+    const resetDropdown = () => {
         options.map((option) => {
             if (option.value == status) {
                 setColor(option.color)
                 setText(option.text)
             }
         })
+    }
 
+    useEffect(() => {
+        resetDropdown()
     }, [status])
 
     useEffect(() => {
-
         options.map((option) => {
             if (option.value == startingStatus) {
                 setColor(option.color)
                 setText(option.text)
             }
         })
-
     }, [])
 
     const openOptions = () => {
@@ -54,6 +55,7 @@ const Dropdown = ({startingStatus}) => {
                         const changeStatus = () => {
                             setStatus(option.value)
                             setShowing(false)
+                            onDropdownChange(option.value)
                         }
 
                         return (

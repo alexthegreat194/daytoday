@@ -69,6 +69,20 @@ const Dashboard = (props) => {
             .catch(err => console.log(err.response.data));
     };
 
+    const changeStatus = (id, status) => {
+        console.log('status change', id, status)
+        axios.post('/api/tasks/status', {
+            taskId: id,
+            userId: props.user.id,
+            status: status
+        })
+            .then((res) => {
+                console.log(res.data);
+                getTasks();
+            })
+            .catch(err => console.log(err.response.data));
+    }
+
     useEffect(() => {
         getTasks();
     }, []);
@@ -121,6 +135,7 @@ const Dashboard = (props) => {
                                 key={task.id} 
                                 onDelete={() => deleteTask(task.id)}
                                 onCheckBoxClick={() => checkTask(task.id, !task.completed)}
+                                onStatusChange={changeStatus}
                             />
                         )
                     })}
@@ -144,6 +159,7 @@ const Dashboard = (props) => {
                                 key={task.id} 
                                 onDelete={() => deleteTask(task.id)}
                                 onCheckBoxClick={() => checkTask(task.id, !task.completed)}
+                                onStatusChange={changeStatus}
                             />
                         )
                     })}
