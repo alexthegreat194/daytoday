@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Priority from "./Priority";
+import Dropdown from "./Dropdown";
 
 const CheckinSubtasks = ({ tasksState, increasePhase }) => {
 
@@ -21,6 +22,7 @@ const CheckinSubtasks = ({ tasksState, increasePhase }) => {
     return (
         <div className="text-xl h-[80vh] flex flex-col items-center justify-center gap-5">
             <h1 className="text-3xl font-bold">What do you want to do later?</h1>
+            <h5 className="text-xl font-thin text-gray-900">What are somethings that you want to get done in the next couple of days?</h5>
 
             <div className="w-3/5 flex flex-col gap-5">
                 <div className="flex flex-col shadow">
@@ -36,7 +38,7 @@ const CheckinSubtasks = ({ tasksState, increasePhase }) => {
                                 <h3>{task.title}</h3>
 
                                 <div className="flex gap-10">
-                                    <Priority priority={task.priority} />
+                                    <Dropdown startingStatus={task.priority} />
 
                                     <button onClick={() => deleteTask(i)}>
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" 

@@ -6,6 +6,7 @@ import { ableToCheckIn } from "../utils/checks";
 import Task from "../components/Task";
 import Dropdown from "../components/Dropdown";
 import Divider from "../components/Divider";
+import { toast } from "react-hot-toast";
 
 const Dashboard = (props) => {
     
@@ -16,9 +17,17 @@ const Dashboard = (props) => {
         let checkedTasks = givenTasks.filter(task => task.completed && !task.isSubtask);
         let uncheckedTasks = givenTasks.filter(task => !task.completed && !task.isSubtask);
 
+        //bandaid fix to sort both checkedTasks and uncheckedTask by priority
+        checkedTasks.sort((a, b) => b.priority - a.priority);
+        uncheckedTasks.sort((a, b) => b.priority - a.priority);
+
         let subTasks = givenTasks.filter(task => task.isSubtask);
         let checkedSubTasks = subTasks.filter(task => task.completed);
         let uncheckedSubTasks = subTasks.filter(task => !task.completed);
+
+        //bandaid fix to sort both checkedTasks and uncheckedTask by priority
+        checkedSubTasks.sort((a, b) => b.priority - a.priority);
+        uncheckedSubTasks.sort((a, b) => b.priority - a.priority);
 
         let sortedTasks = [...uncheckedTasks, ...checkedTasks];
         let sortedSubTasks = [...uncheckedSubTasks, ...checkedSubTasks];
@@ -84,6 +93,29 @@ const Dashboard = (props) => {
             .catch(err => console.log(err.response.data));
     }
 
+    const confirmDelete = (id) => {
+        toast((t) => {
+
+            const handleConfirm = () => {
+                deleteTask(id);
+                toast.dismiss(t.id)
+            }
+
+            return (
+                <div className="flex justify-center items-center gap-5">
+                    <h3 className="font-bold">Delete Task?</h3> 
+                    <div className="">
+                        <button onClick={handleConfirm} className="text-white bg-red-400 hover:bg-red-500 transition-colors rounded-xl px-5 py-2">Confirm</button>
+                        {/* <button className="text-white bg-blue-300 hover:bg-blue-400 transition-colors rounded-xl px-5 py-2" >Cancel</button> */}
+                    </div>
+                </div>
+            )
+        },
+        {
+            duration: 5000,
+        })
+    }
+
     useEffect(() => {
         getTasks();
     }, []);
@@ -120,50 +152,24 @@ const Dashboard = (props) => {
     return (
         <>
 
-        <div className="flex justify-center">
-            <h1 className="text-3xl font-bold">Welcome Back {props.user.username}</h1>
+        <div className="flex justify-center border p-10">
+            <h1 className="text-3xl font-thin">Welcome Back <span className="font-bold">{props.user.username}</span></h1>
         </div>        
 
 
         <div className="w-1/2">
             <div className="m-5">
-                <h1 className="text-2xl font-bold">Tasks</h1>
+                <h1 className="text-2xl font-semibold my-3">Tasks</h1>
                 <div>
                     {tasks.map((task) => {
-                        if (task.completed != true) {
-                            return (
-                                <Task
-                                    task={task}
-                                    key={task.id} 
-                                    onDelete={() => deleteTask(task.id)}
-                                    onCheckBoxClick={() => checkTask(task.id, !task.completed)}
-                                    onStatusChange={changeStatus}
-                                />
-                            )
-                        }
                         return (
-                            <></>
-                        )
-                    })}
-                </div>
-
-                {/* <Divider /> */}
-
-                <div>
-                    {tasks.map((task) => {
-                        if (task.completed == true) {
-                            return (
-                                <Task
-                                    task={task}
-                                    key={task.id} 
-                                    onDelete={() => deleteTask(task.id)}
-                                    onCheckBoxClick={() => checkTask(task.id, !task.completed)}
-                                    onStatusChange={changeStatus}
-                                />
-                            )
-                        }
-                        return (
-                            <></>
+                            <Task
+                                task={task}
+                                key={task.id} 
+                                onDelete={() => confirmDelete(task.id)}
+                                onCheckBoxClick={() => checkTask(task.id, !task.completed)}
+                                onStatusChange={changeStatus}
+                            />
                         )
                     })}
                 </div>
@@ -175,16 +181,18 @@ const Dashboard = (props) => {
                     </form>
                 </div>
             </div>
+
+            {/* <Divider /> */}
     
             <div className="m-5">
-                <h1 className="text-2xl font-bold">Subtasks</h1>
+                <h1 className="text-2xl font-semibold  my-3">Subtasks</h1>
                 <div>
                     {subTasks.map((task) => {
                         return (
                             <Task
                                 task={task}
                                 key={task.id} 
-                                onDelete={() => deleteTask(task.id)}
+                                onDelete={() => confirmDelete(task.id)}
                                 onCheckBoxClick={() => checkTask(task.id, !task.completed)}
                                 onStatusChange={changeStatus}
                             />

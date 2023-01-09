@@ -4,9 +4,9 @@ import { toast } from "react-hot-toast";
 const Dropdown = ({startingStatus, onDropdownChange = (status) => {}}) => {
 
     const options = [
-        {value: 0, color: "bg-green-300", text: "low"},
-        {value: 1, color: "bg-yellow-300", text: "mid"},
-        {value: 2, color: "bg-red-300", text: "high"},
+        {value: 0, color: "bg-green-300", text: "Low"},
+        {value: 1, color: "bg-yellow-300", text: "Mid"},
+        {value: 2, color: "bg-red-300", text: "High"},
     ]
 
     const [showing, setShowing] = useState(false);
