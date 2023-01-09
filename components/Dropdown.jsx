@@ -50,7 +50,7 @@ const Dropdown = ({startingStatus, onDropdownChange = (status) => {}}) => {
 
             {showing == true &&
                 <div className="absolute flex flex-col backdrop-blur rounded">
-                        {options.map((option) => {
+                        {options.map((option, i) => {
                             
                             const changeStatus = () => {
                                 setStatus(option.value)
@@ -59,7 +59,7 @@ const Dropdown = ({startingStatus, onDropdownChange = (status) => {}}) => {
                             }
 
                             return (
-                                <button onClick={changeStatus}>
+                                <button key={i} onClick={changeStatus}>
                                     <h3 className={option.color + " font-light px-5 py-1 rounded-xl w-32 text-center shadow my-1 hover:my-0 hover:py-2 hover:cursor-pointer transition-all"}>{option.text}</h3>
                                 </button>
                             )
