@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 
 const register = async (req, res) => {
     const { username, email, password } = req.body;
-    console.log(username, email, password);
+    // console.log(username, email, password);
     
     if (req.method !== 'POST') {
         return res.status(405).json({
