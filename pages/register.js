@@ -4,6 +4,7 @@ import { toast } from "react-hot-toast";
 import cookieCutter from "cookie-cutter";
 import { TokenContext } from "./_app";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function Register() {
 
@@ -11,6 +12,7 @@ export default function Register() {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const router = useRouter();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -26,6 +28,7 @@ export default function Register() {
             console.log(res);
             cookieCutter.set('token', res.data.token);
             setToken(res.data.token);
+            router.push('/dashboard');
         })
         .catch(err => {
             console.log(err);
@@ -33,7 +36,7 @@ export default function Register() {
         
         toast.promise(registerPost, {
             loading: 'Creating Account...',
-            success: (res) => `Account created!: ${res.data.token}`,
+            success: (res) => `Account created!`,
             error: (err) => `${err.response.data.message}`,
         });
     }
