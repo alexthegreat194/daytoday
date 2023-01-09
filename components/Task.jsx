@@ -4,13 +4,13 @@ import Dropdown from "./Dropdown";
 
 const Task = ({task, onCheckBoxClick, onDelete, onStatusChange}) => {
 
-    const [isChecked, setIsChecked] = useState(task.completed); 
+    const [isChecked, setIsChecked] = useState(task.completed);     
 
     return (
-        <div className="flex justify-between border p-5">
+        <div className={"flex justify-between border p-5 " + (isChecked ? "bg-gray-100" : "")}>
             <div className="flex gap-5 items-center">
                 <input className="scale-150	" type="checkbox" defaultChecked={task.completed} onClick={onCheckBoxClick}/>
-                <h3 className="text-lg">{task.title}</h3>
+                <h3 className={"text-lg " + (isChecked ? "line-through" : "")}>{task.title}</h3>
             </div>
 
             <div className="flex gap-5 items-center">

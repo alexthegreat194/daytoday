@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { toast } from "react-hot-toast";
 
-const Dropdown = ({startingStatus, onDropdownChange}) => {
+const Dropdown = ({startingStatus, onDropdownChange = (status) => {}}) => {
 
     const options = [
         {value: 0, color: "bg-green-300", text: "low"},
@@ -44,26 +44,26 @@ const Dropdown = ({startingStatus, onDropdownChange}) => {
     return (
         <div className="">
 
-            <h3 onClick={openOptions} className={color + " font-light px-5 py-1 rounded-xl w-32 text-center shadow  my-1 hover:my-0 hover:py-2 hover:cursor-pointer transition-all"}>
+            <button onClick={openOptions} className={color + " font-light px-5 py-1 rounded-xl w-32 text-center shadow  my-1 hover:my-0 hover:py-2 hover:cursor-pointer transition-all"}>
                 {text}
-            </h3>
+            </button>
 
             {showing == true &&
-                <div className="absolute flex flex-col ">
-                    {options.map((option) => {
-                        
-                        const changeStatus = () => {
-                            setStatus(option.value)
-                            setShowing(false)
-                            onDropdownChange(option.value)
-                        }
+                <div className="absolute flex flex-col backdrop-blur rounded">
+                        {options.map((option) => {
+                            
+                            const changeStatus = () => {
+                                setStatus(option.value)
+                                setShowing(false)
+                                onDropdownChange(option.value)
+                            }
 
-                        return (
-                            <div onClick={changeStatus}>
-                                <h3 className={option.color + " font-light px-5 py-1 rounded-xl w-32 text-center shadow my-1 hover:my-0 hover:py-2 hover:cursor-pointer transition-all"}>{option.text}</h3>
-                            </div>
-                        )
-                    })}
+                            return (
+                                <button onClick={changeStatus}>
+                                    <h3 className={option.color + " font-light px-5 py-1 rounded-xl w-32 text-center shadow my-1 hover:my-0 hover:py-2 hover:cursor-pointer transition-all"}>{option.text}</h3>
+                                </button>
+                            )
+                        })}
                 </div>
             }
 

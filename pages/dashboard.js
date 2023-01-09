@@ -5,6 +5,7 @@ import axios from "axios";
 import { ableToCheckIn } from "../utils/checks";
 import Task from "../components/Task";
 import Dropdown from "../components/Dropdown";
+import Divider from "../components/Divider";
 
 const Dashboard = (props) => {
     
@@ -129,14 +130,40 @@ const Dashboard = (props) => {
                 <h1 className="text-2xl font-bold">Tasks</h1>
                 <div>
                     {tasks.map((task) => {
+                        if (task.completed != true) {
+                            return (
+                                <Task
+                                    task={task}
+                                    key={task.id} 
+                                    onDelete={() => deleteTask(task.id)}
+                                    onCheckBoxClick={() => checkTask(task.id, !task.completed)}
+                                    onStatusChange={changeStatus}
+                                />
+                            )
+                        }
                         return (
-                            <Task
-                                task={task}
-                                key={task.id} 
-                                onDelete={() => deleteTask(task.id)}
-                                onCheckBoxClick={() => checkTask(task.id, !task.completed)}
-                                onStatusChange={changeStatus}
-                            />
+                            <></>
+                        )
+                    })}
+                </div>
+
+                {/* <Divider /> */}
+
+                <div>
+                    {tasks.map((task) => {
+                        if (task.completed == true) {
+                            return (
+                                <Task
+                                    task={task}
+                                    key={task.id} 
+                                    onDelete={() => deleteTask(task.id)}
+                                    onCheckBoxClick={() => checkTask(task.id, !task.completed)}
+                                    onStatusChange={changeStatus}
+                                />
+                            )
+                        }
+                        return (
+                            <></>
                         )
                     })}
                 </div>
@@ -150,7 +177,7 @@ const Dashboard = (props) => {
             </div>
     
             <div className="m-5">
-                <h1 className="text-2xl font-bold">SubTasks</h1>
+                <h1 className="text-2xl font-bold">Subtasks</h1>
                 <div>
                     {subTasks.map((task) => {
                         return (
