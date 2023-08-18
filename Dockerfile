@@ -3,3 +3,4 @@ WORKDIR /app
 COPY package.json /app
 RUN npm install --loglevel verbose
 COPY . /app
+RUN npx prisma generate

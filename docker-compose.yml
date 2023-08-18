@@ -7,4 +7,4 @@ services:
     environment:
       - JWT_SECRET="secret"
       - DATABASE_URL="postgresql://alex:password@localhost:5432/daytoday?schema=public"
-    command: npm run dev
+    command: npm run start:dev

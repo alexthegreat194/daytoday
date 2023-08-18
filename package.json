@@ -7,11 +7,11 @@
     "build": "next build",
     "start": "next start",
     "start:dev": "npx prisma migrate deploy && npm run dev",
-    "start:production": "npx prisma generate && npx prisma migrate deploy && npm run build && npm run start",
+    "start:production": "npx prisma migrate deploy && npm run build && npm run start",
     "lint": "next lint"
   },
   "dependencies": {
-    "@prisma/client": "4.2.1",
+    "@prisma/client": "4.16.2",
     "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "cookie-cutter": "^0.2.0",
@@ -19,7 +19,7 @@
     "cookies-next": "^2.1.1",
     "jsonwebtoken": "^8.5.1",
     "next": "12.2.5",
-    "prisma": "^4.16.2",
+    "prisma": "4.16.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hot-toast": "^2.3.0"
