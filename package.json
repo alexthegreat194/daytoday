@@ -6,6 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "start:dev": "npx prisma migrate deploy && npm run dev",
+    "start:production": "npx prisma migrate deploy && npm run build && npm run start",
     "lint": "next lint"
   },
   "dependencies": {
