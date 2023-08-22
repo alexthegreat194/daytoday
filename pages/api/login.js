@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import prisma from '../../utils/prisma';
 import bcrypt from 'bcrypt';
+import { logger } from '../../utils/logging';
 
 const login = async (req, res) => {
   const { username, password } = req.body;
@@ -43,6 +44,8 @@ const login = async (req, res) => {
     username: foundUser.username,
     id: foundUser.id,
   }, process.env.JWT_SECRET, { expiresIn: '10h' });
+
+  logger.info(`User ${foundUser.username} logged in`);
   res.json({
     success: true,
     token,
