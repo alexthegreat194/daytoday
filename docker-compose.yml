@@ -1,28 +1,10 @@
 version: '3.8'
 services:
-  db:
-    image: postgres:latest
-    restart: always
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-    ports:
-      - '5432:5432'
-    volumes: 
-      - db:/var/lib/postgresql/data
-  api:
-    container_name: daytoday
+  web:
     build: .
-    image: daytoday
-    depends_on:
-      - db
     ports:
-      - 3000:3000
+      - "3000:3000"
     environment:
-      NODE_ENV: production
-      DATABASE_URL: postgresql://postgres:postgres@db:5432/postgres?schema=public"
-    links:
-      - db
-volumes:
-  db:
-    driver: local
+      - JWT_SECRET="secret"
+      - DATABASE_URL="postgresql://alex:password@localhost:5432/daytoday?schema=public"
+    command: npm run start:dev

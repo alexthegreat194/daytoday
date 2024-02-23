@@ -1,5 +1,6 @@
 
 import prisma from "../../utils/prisma";
+import { logger } from "../../utils/logging";
 
 const post = async (req, res) => {
     const { title, userId, isSubtask } = req.body;
@@ -23,7 +24,6 @@ const post = async (req, res) => {
 
 const get = async (req, res) => {
     const { userId } = req.query;
-    // console.log("Body: ", req.query);
 
     if (!userId) {
         return res.status(400).json({
