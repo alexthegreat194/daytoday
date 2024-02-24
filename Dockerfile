@@ -1,7 +1,11 @@
-FROM node:14-alpine
+FROM node:20
+
 WORKDIR /app
+
 COPY package.json /app
+COPY package-lock.json /app
+COPY prisma /app/prisma
+
 RUN npm install --loglevel verbose
+
 COPY . /app
-RUN npx prisma migrate deploy
-CMD ['npm', 'start']
